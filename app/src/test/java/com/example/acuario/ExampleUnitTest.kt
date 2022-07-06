@@ -1,4 +1,4 @@
-package com.example.acuario
+package com.ralemancode.acuario
 
 import org.junit.Test
 

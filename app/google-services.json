@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "910680109797",
+    "project_id": "acuariocompatibility",
+    "storage_bucket": "acuariocompatibility.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910680109797:android:57c624e95f8d8f92c69a0c",
+        "android_client_info": {
+          "package_name": "com.ralemancode.acuario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "910680109797-9971mm9qg85p3vqhdc757ndn0o7ctmks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOfD8WojcOdwbzxfsOkkJmUKPbiNWYpGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "910680109797-9971mm9qg85p3vqhdc757ndn0o7ctmks.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

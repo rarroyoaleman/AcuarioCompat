@@ -1,13 +1,18 @@
-package com.example.acuario
+package com.ralemancode.acuario
 
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
-import com.example.acuario.notifications.Notification
-import com.example.acuario.R
+import android.util.Log
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import com.ralemancode.acuario.notifications.Notification
+import com.ralemancode.acuario.R
 
 class acuarioApplication : Application() {
 
@@ -19,6 +24,7 @@ class acuarioApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        recoveryRegistryToken()
     }
 
 
@@ -38,4 +44,23 @@ class acuarioApplication : Application() {
             notificationManager.createNotificationChannel(channel)
         }
     }
+
+
+    private fun recoveryRegistryToken(){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = getString(R.string.msg_token_fmt).plus(token)
+            Log.d(TAG, msg)
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
+    }
+
 }

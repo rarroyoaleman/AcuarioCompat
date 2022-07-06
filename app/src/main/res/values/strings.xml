@@ -47,4 +47,12 @@
     <string name="channel_name">Nombre Canal</string>
     <string name="channel_description">Descripcion canal</string>
     <string name="title_activity_alert_details">AlertDetails</string>
+
+
+    <string name="default_notification_channel_id">canalDefecto</string>
+    <string name="msg_token_fmt">Token: </string>
+
+    <string name="fcm_message">Mensaje</string>
+
+
 </resources>

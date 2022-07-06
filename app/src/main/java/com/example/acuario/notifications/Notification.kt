@@ -1,4 +1,4 @@
-package com.example.acuario.notifications
+package com.ralemancode.acuario.notifications
 
 /**
  * return notificationId is a unique int for each notification that you must define

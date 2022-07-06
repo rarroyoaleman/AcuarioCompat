@@ -1,4 +1,4 @@
-package com.example.acuario.utils
+package com.ralemancode.acuario.utils
 
 class utils {
 }
