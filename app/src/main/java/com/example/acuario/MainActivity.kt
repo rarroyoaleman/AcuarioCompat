@@ -1,35 +1,32 @@
 package com.ralemancode.acuario
 
-import android.app.Activity
-import android.app.PendingIntent
-import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
+import com.example.acuario.utils.constants.Companion.NOTIFICATION_REQUEST_CODE
 import com.google.android.material.snackbar.Snackbar
 import com.ralemancode.acuario.databinding.ActivityMainBinding
-import com.ralemancode.acuario.notifications.AlertDetails
-import com.ralemancode.acuario.notifications.Notification
-import com.ralemancode.acuario.notifications.getNotificationId
+import com.example.acuario.providers.firebase.FirebaseProvider.Companion.askNotificationPermission
+import com.example.acuario.providers.firebase.FirebaseProvider.Companion.createNotification
+import com.example.acuario.providers.googleplay.GooglePlayProvider.Companion.isGooglePlayServicesAvailable
 
 
 class MainActivity : AppCompatActivity() {
+
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         isGooglePlayServicesAvailable(this)
@@ -49,29 +46,13 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-//        Creamos la notificacion
-        var textTitle = "titulo texto2"
-        var textContent = "titulo contenido2"
+        // NOTIFICACIONES LOCAL
+        //createNotification(this, "titulo mensaje prueba","Mensaje de prueba Body")
+        // END NOTIFICACIONES LOCAL
 
-        // Create an explicit intent for an Activity in your app
-        val intent = Intent(this, AlertDetails::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-
-        var builder = NotificationCompat.Builder(this, Notification.CHANNEL_ID.toString())
-            .setSmallIcon(androidx.transition.R.drawable.abc_btn_check_material)
-            .setContentTitle(textTitle)
-            .setContentText(textContent)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            // Set the intent that will fire when the user taps the notification
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-
-        // notificationId is a unique int for each notification that you must define
-        with(NotificationManagerCompat.from(this)) {
-            notify(getNotificationId(), builder.build())
-        }
+        // NOTIFICACIONES ANDROID 13
+        askNotificationPermission(this)
+        // NOTIFICACIONES ANDROID 13
 
     }
 
@@ -106,15 +87,20 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun isGooglePlayServicesAvailable(activity: Activity?): Boolean {
-        val googleApiAvailability = GoogleApiAvailability.getInstance()
-        val status = googleApiAvailability.isGooglePlayServicesAvailable(activity!!)
-        if (status != ConnectionResult.SUCCESS) {
-            if (googleApiAvailability.isUserResolvableError(status)) {
-                googleApiAvailability.getErrorDialog(activity, status, 2404)!!.show()
+    // NOTIFICACIONES
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            NOTIFICATION_REQUEST_CODE -> {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // FCM SDK (and your app) can post notifications.
+                } else {
+                    // TODO: Inform user that that your app will not show notifications.
+                }
+                return
             }
-            return false
         }
-        return true
     }
+    // END NOTIFICACIONES
 }

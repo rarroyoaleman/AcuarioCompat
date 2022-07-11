@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../.gradle/caches/transforms-3/04106d515fd267bdfe1304eead3a1817/transformed/appcompat-1.4.1/res/drawable/abc_btn_check_material.xml" value="0.169" />
+        <entry key="..\:/repositorios/AndroidProofs/Notificaciones/AcuarioCompat/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1715" />
+        <entry key="..\:/repositorios/AndroidProofs/Notificaciones/AcuarioCompat/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1715" />
         <entry key="app/src/main/res/layout/fragment_second2.xml" value="0.15989583333333332" />
       </map>
     </option>
